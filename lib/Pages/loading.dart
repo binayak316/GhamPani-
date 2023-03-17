@@ -30,12 +30,13 @@ class _LoadingState extends State<Loading> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 150,
-                width: 150,
                 child: Column(children: [
                   Container(
-                    child: Image.asset(
-                      "assets/weather_icon.png",
+                    height: 130,
+                    width: 130,
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage: AssetImage('assets/logo.png'),
                     ),
                   )
                 ]),
