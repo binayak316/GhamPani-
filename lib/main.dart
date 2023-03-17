@@ -6,9 +6,9 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     routes: {
-      // "/": (context) => Loading(),
-      "/": (context) => HomeScreen(), //this is fake page used for making UI
-      // "/home": (context) => HomeScreen(),
+      "/": (context) => Loading(),
+      // "/": (context) => HomeScreen(), //this is fake page used for making UI
+      "/home": (context) => HomeScreen(),
     },
   ));
 }

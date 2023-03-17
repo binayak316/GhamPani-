@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:gham_pani/Pages/home.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class Loading extends StatefulWidget {
@@ -11,6 +14,19 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    print('loading page is initialized');
+
+    super.initState();
+
+    Timer(
+        Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomeScreen())));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

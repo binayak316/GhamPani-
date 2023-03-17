@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:http/http.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +13,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //getting data from api
+  void getData() async {
+    Response response = await get(Uri.parse(
+        "https://api.openweathermap.org/data/2.5/weather?q=pokhara&appid=98a5fbfba83a4d015e293dc36d211549"));
+    Map data = jsonDecode(response.body);
+    print(data['timezone']);
+  }
+
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+    print('home is initialized');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   decoration: BoxDecoration(
-                      boxShadow: [BoxShadow(blurRadius: 3)],
+                      boxShadow: [BoxShadow(blurRadius: 1)],
                       borderRadius: BorderRadius.circular(25),
                       color: Colors.white),
                   child: Row(
@@ -52,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   height: 500,
                   decoration: BoxDecoration(
-                    boxShadow: [BoxShadow(blurRadius: 5)],
+                    boxShadow: [BoxShadow(blurRadius: 1)],
                     borderRadius: BorderRadius.circular(50),
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),
@@ -203,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   height: 70,
                   decoration: BoxDecoration(
-                      boxShadow: [BoxShadow(blurRadius: 2)],
+                      boxShadow: [BoxShadow(blurRadius: 1)],
                       borderRadius: BorderRadius.circular(40),
                       color: Colors.blue),
                   child: Row(
