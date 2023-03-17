@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                       boxShadow: [BoxShadow(blurRadius: 3)],
                       borderRadius: BorderRadius.circular(25),
-                      color: Colors.grey),
+                      color: Colors.white),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
