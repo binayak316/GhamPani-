@@ -7,7 +7,6 @@ void main() {
     debugShowCheckedModeBanner: false,
     routes: {
       "/": (context) => Loading(),
-      // "/": (context) => HomeScreen(), //this is fake page used for making UI
       "/home": (context) => HomeScreen(),
     },
   ));

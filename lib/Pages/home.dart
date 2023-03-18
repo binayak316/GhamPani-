@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:http/http.dart';
+import 'package:gham_pani/GetApiData/worker.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,23 +14,33 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //getting data from api
-  void getData() async {
-    Response response = await get(Uri.parse(
-        "https://api.openweathermap.org/data/2.5/weather?q=pokhara&appid=98a5fbfba83a4d015e293dc36d211549"));
-    Map data = jsonDecode(response.body);
-    print(data['timezone']);
-  }
-
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
+
     print('home is initialized');
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('widget destroyed');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Map? info =
+        ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?;
+    String temp = ((info!['temp_value']).toString()).substring(0, 2);
+    String hum = info['humidity_value'].toString();
+    String airSpeed = ((info['air_speed_value']).toString()).substring(0, 3);
+    String pressure = info['pressure_value'];
+    String sea_level = info['seaLevel_value'];
+    String currentSituation = info['current_situation'];
+    String description = info['description'];
+    String icon = info['icon_value'];
+    String? city = info['city_value'];
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -91,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  '17',
+                                  '$temp\u00B0 C',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 34,
@@ -102,11 +113,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Icon(
-                                Icons.cloud,
-                                color: Colors.white,
-                                size: 120,
+
+                              Container(
+                                child: Image.network(
+                                  'https://openweathermap.org/img/wn/$icon@2x.png',
+                                  height: 150,
+                                  width: 180,
+                                  fit: BoxFit.cover,
+                                  filterQuality: FilterQuality.high,
+                                ),
                               )
+                              // Icon(
+                              //   Icons.cloud,
+                              //   color: Colors.white,
+                              //   size: 120,
+                              // )
                             ],
                           ),
                         ),
@@ -120,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'LONDON',
+                                '$city'.toUpperCase(),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 20,
@@ -143,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       flex: 1,
                                       child: Column(
-                                        children: [Text('17 km /hr')],
+                                        children: [Text('$airSpeed km /hr')],
                                       ),
                                     )
                                   ],
@@ -164,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       flex: 1,
                                       child: Column(
-                                        children: [Text('Humidity 17%')],
+                                        children: [Text('$hum%')],
                                       ),
                                     )
                                   ],
@@ -177,13 +198,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       flex: 1,
                                       child: Column(
-                                        children: [Icon(Icons.sunny)],
+                                        children: [
+                                          // Icon(Icons.sunny),
+                                          Container(
+                                            height: 25,
+                                            width: 25,
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.grey,
+                                              child: Image.network(
+                                                'https://openweathermap.org/img/wn/$icon@2x.png',
+                                                height: 25,
+                                                width: 25,
+                                                fit: BoxFit.cover,
+                                                filterQuality:
+                                                    FilterQuality.high,
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
                                     Expanded(
                                       flex: 1,
                                       child: Column(
-                                        children: [Text('description')],
+                                        children: [Text('$currentSituation')],
                                       ),
                                     )
                                   ],
@@ -202,7 +240,45 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Expanded(
                                       flex: 1,
                                       child: Column(
-                                        children: [Text('17 C')],
+                                        children: [Text('$temp\u00B0 C')],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Column(
+                                        children: [Icon(Icons.pallet)],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Column(
+                                        children: [Text('$pressure  Pa')],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Column(
+                                        children: [Icon(Icons.water)],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Column(
+                                        children: [Text('$sea_level  Feet')],
                                       ),
                                     )
                                   ],
@@ -245,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Santiago bernabeu',
+                                '$description'.toUpperCase(),
                                 style: TextStyle(color: Colors.white),
                               ),
                               Container(
