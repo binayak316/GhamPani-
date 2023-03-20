@@ -15,7 +15,6 @@ class Worker {
   String? situation;
   String? description;
   String? icon;
-  String? city;
 
   // creating constructor
 
@@ -31,10 +30,10 @@ class Worker {
 
       // getting temp, humidity, pressure, sea_level
       Map tem_data = data['main'];
-      String getCity = data['name'];
       double get_temp = tem_data['temp'] - 273.15;
       String get_humidity = tem_data['humidity'].toString();
       String get_sea_level = tem_data['sea_level'].toString();
+
       String get_pressure = tem_data['pressure'].toString();
 
       //getting air speed
@@ -56,19 +55,18 @@ class Worker {
       situation = get_situation.toString();
       description = get_description;
       icon = weather_main_data['icon'].toString();
-      city = getCity.toString();
     } catch (e) {
       //yedi error ayo vane assign gareko value ma default text pathaidine
       //if user hits jpt location this exception will run
-      temp = "No Data please try another location";
-      humidity = "No Data please try another location";
-      sea_level = "No Data please try another location";
-      pressure = "No Data please try another location";
-      air_speed = "No Data please try another location";
-      situation = "No Data please try another location";
-      description = "No Data please try another location";
-      icon = "no found";
-      city = "no data found";
+      temp = "N/A";
+      humidity = "N/A";
+      sea_level = "N/A";
+      pressure = "N/A";
+      air_speed = "N/A";
+      situation = "N/A";
+      description = "N/A";
+      icon = "09d";
+      ;
     }
   }
 }

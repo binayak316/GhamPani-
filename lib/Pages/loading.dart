@@ -15,7 +15,7 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  String? location;
+  String? cityy = "Pokhara";
   String? temperature;
   String? hum;
   String? air_speed;
@@ -25,13 +25,12 @@ class _LoadingState extends State<Loading> {
   String? currentSituation;
   String? description;
   String? icon;
-  String? city;
 
   // //creating instance object of worker class
   // Worker worker = Worker();
   // worker.air_speed
-  void startApp() async {
-    Worker worker = Worker(location: "Pokhara");
+  void startApp(String cityy) async {
+    Worker worker = Worker(location: cityy);
     await worker.getData();
     // print(worker.air_speed);
     // print(worker.humidity);
@@ -43,11 +42,11 @@ class _LoadingState extends State<Loading> {
     currentSituation = worker.situation;
     description = worker.description;
     icon = worker.icon;
-    city = worker.city;
 
     // throw the data to the home route
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, '/home', arguments: {
+        //pushReplacementNamed make the previous route destroy
         "temp_value": temperature,
         "humidity_value": hum,
         "air_speed_value": air_speed,
@@ -56,7 +55,7 @@ class _LoadingState extends State<Loading> {
         "current_situation": currentSituation,
         "description": description,
         "icon_value": icon,
-        "city_value": city,
+        "cityy_value": cityy,
       });
     });
   }
@@ -65,7 +64,8 @@ class _LoadingState extends State<Loading> {
   void initState() {
     // TODO: implement initState
     print('loading page is initialized');
-    startApp();
+
+    // print(seaLevel);
     super.initState();
 
     // Timer(
@@ -76,6 +76,14 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
+    Map? SearchData =
+        ModalRoute.of(context)?.settings.arguments as Map<dynamic, dynamic>?;
+    if (SearchData?.isNotEmpty ?? false) {
+      // null huda ni baira jane ra empty huda ne baira jane va
+      //null aye false chalxa if statement nai run hudaina true aaye data dekhauxa
+      cityy = SearchData?['searchedText'];
+    }
+    startApp(cityy!);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(

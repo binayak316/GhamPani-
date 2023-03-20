@@ -8,6 +8,7 @@ void main() {
     routes: {
       "/": (context) => Loading(),
       "/home": (context) => HomeScreen(),
+      "/loading": (context) => Loading(),
     },
   ));
 }
